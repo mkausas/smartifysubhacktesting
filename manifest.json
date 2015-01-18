@@ -1,5 +1,5 @@
 {
-    "name": "My awesome extension :)",
+    "name": "Smartify",
     "version": "0.1",
     "icons": { 
         "16": "/img/icons/icon_16.png",
@@ -7,7 +7,7 @@
         "128": "/img/icons/icon_128.png" 
     },
 
-    "description": "Yay, I'm so useless.",
+    "description": "Sample description goes here!",
     "permissions": [
         "https://*/*",
         "http://*/*",
@@ -20,7 +20,8 @@
             "js": [
                     "/js/external/jquery.js", 
                     "/js/content_script.js",
-                    "/js/external/tipped.js"
+                    "/js/external/tipped.js",
+                    "js/TwitterFB.js"
                 ],
             "css": [
                     "/css/tipped/tipped.css"

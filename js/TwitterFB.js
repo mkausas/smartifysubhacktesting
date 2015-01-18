@@ -1,95 +1,8 @@
-var wordCount = 0;
-// function parse() {
-	var classIdentifier = '';
-
-	if (document.URL.search("twitter.com") != -1) {
-		classIdentifier = 'js-tweet-text tweet-text';
-	} else if (document.URL.search("facebook.com") != -1) {
-		classIdentifier = '_5pbx userContent';
-	}
-
-	var posts = document.getElementsByClassName(classIdentifier);
-	for (i = 0; i < posts.length; i++) {
-		var currentPost = posts[i];
-		var currentPostObject;
-		if (document.URL.search("twitter.com") != -1) {
-			currentPostObject = currentPost;
-		} else {
-		 	currentPostObject = currentPost.getElementsByTagName('p')[0];
-		}
-		var textWithTags = currentPostObject.innerHTML;
-		var plainText = currentPostObject.innerText;
-
-		var plainTextArray = plainText.split(" ");
-
-
-		// NOTE: the replacing the word is CASE-SENSITIVE
-		var oldWord = " the "; // issue: for words like 'and' it replaces itself in longer words such as 'anderson'  
-		var newWord = "!!!!chortle!!!!"; // possible fix ^^^ add spaces: ' and ' 
-		var definition = "a slight chuckle";
-
-		// alert("parse is running");
-
-		// synonym magic goes here
-		for (j = 0; j < plainTextArray.length; j++) {
-			if (plainTextArray[j].length > 3) {
-				if (plainTextArray[j].matches)
-				for (k = 0; k < smartWords.length; k++) {
-					if (smartWords[k].length > 2) {
-						for (l = 2; l < smartWords[k].length; l++) {
-							// console.log("comparing " + smartWords[k][l] + " to " + plainTextArray[j]);
-							if (smartWords[k][l] == plainTextArray[j]) {
-								console.log(plainText);
-								oldWord = plainTextArray[j];
-								newWord = smartWords[k][l];
-								definition = smartWords[k][1];
-								// j += 10;
-
-								alert("replacing " + oldWord + " with " + newWord);
-
-								var newText = textWithTags.replace(oldWord, newWord);
-								currentPostObject.innerHTML = newText;
-								wordCount++;
-							}
-						}
-					} 
-				}
-			}
-		}
-
-
-
-
-		// var insertion = "<span 
-		// data-tipped-options=\"title: '" + newWord + "', position: 'top'\"
-		// title=\"" + definition + "\"  
-		// id=\"translated" + wordCount + "\">" + 
-		// newWord + 
-		// "</span>";
-
-		// var insertion = 
-		// "<span 
-		// title=\"" + definition + "\" 
-		// id=\"translated" + wordCount + "\" 
-		// data-tipped-options=\"title: '" + newWord + "', position: 'top'\">" + newWord + "</span>";
-		
-		//"<span title=\"" + "word" + "\" id=\"translated" + "1" + "\" data-tipped-options=\"title: '" + newWord + "', position: 'top'\">hella</span>"
-		//"<span title=\"" + definition + "\" id=\"translated" + wordCount + "\" data-tipped-options=\"title: '" + newWord + "', position: 'top'\">hella</span>"
-
-
-
-		// Tipped.create('#word\'' + wordCount, { title: true, title: newWord });
-
-
-	}
-// } 
-
-
 var smartWords = 
 [["accolade", "a tangible symbol signifying approval or distinction", "a nor", "honour", "laurels", "symbol"],
 ["acrimony", "bitterness", "bitterness", "acerbity", "jaundice", "tartness", "thorniness", "disagreeableness"],
 ["angst", "an acute but unspecific feeling of anxiety", "Angst", "anxiety"],
-["anomaly", "abnormality", "anomalousness", "unusual person", "abnormal condition", "abnormalcy", "abnormality", "individual", "mortal", "person", "place", "position", "somebody", "someone", "soul"],
+["anomaly", "abnormality", "anomalousness", "unusual person", "abnormal condition", "abnormalcy", "abnormality", "individual", "mortal", "person", "place", "position", "somebody", "soul"],
 ["antidote", "a remedy that stops or controls the effects of a poison", "counterpoison", "curative", "cure", "remedy", "therapeutic"],
 ["avant-garde", "Ahead of the times, especially in the arts", "daring", "vanguard", "van", "new wave", "art movement", "artistic movement"],
 ["baroque", "having elaborate symmetrical ornamentation", "churrigueresque", "churrigueresco", "baroqueness", "artistic style", "idiom"],
@@ -108,6 +21,7 @@ var smartWords =
 ["caustic", "sarcastic", "acerb", "acerbic", "acid", "acrid", "bitter", "blistering", "sulfurous", "sulphurous", "virulent", "vitriolic", "corrosive", "erosive", "mordant", "venomous", "chemical compound", "compound"],
 ["charisma", "charm", "personal appeal", "personal magnetism", "attractiveness", "interest", "interestingness"],
 ["cloying", "excessively sweet or sentimental", "saccharine", "syrupy", "treacly"],
+["considerable", "excessively sweet or sentimental", "great", "", ""],
 ["déjà vu", "the experience of thinking that a new situation had occurred before"],
 ["dichotomy", "a division into two parts", "duality", "categorisation", "categorization", "classification"],
 ["dilettante", "showing frivolous or superficial interest", "dilettantish", "dilettanteish", "sciolistic", "dabbler", "sciolist", "amateur"],
@@ -184,10 +98,119 @@ var smartWords =
 // ["vicarious", "done or felt for, or on behalf of, another"],
 ["vile", "morally reprehensible", "despicable", "ugly", "slimy", "unworthy", "worthless", "wretched", "nauseating", "nauseous", "noisome", "queasy", "loathsome", "offensive", "sickening"],
 ["waft", "be driven or carried along, as by the air", "pennant", "pennon", "streamer", "flag", "be adrift", "blow", "drift", "float"],
-["white", "elephant a possession that costs more to keep than its worth", "snowy", "lily-white", "white-hot", "blank", "clean", "whitened", "ashen", "blanched", "bloodless", "livid", "white person", "Caucasian", "White", "whiteness", "Edward White", "Edward D. White", "Edward Douglas White Jr.", "Patrick White", "Patrick Victor Martindale White", "T. H. White", "Theodore Harold White", "Stanford White", "E. B. White", "Elwyn Brooks White", "Andrew D. White", "Andrew Dickson White", "White River", "egg white", "albumen", "ovalbumin", "flannel", "gabardine", "tweed", "achromatic color", "achromatic colour", "architect", "author", "chief justice", "designer", "educator", "fixings", "individual", "ingredient", "journalist", "man", "mortal", "pant", "pedagog", "pedagogue", "person", "piece", "river", "somebody", "someone", "soul", "trouser", "writer", "whiten", "color", "colour", "discolor", "discolour"],
-["zealous", "enthusiastic; fervent; fanatica", "avid", "eager", "great"]]
+["write", "to mark on a surface", "inscribe", "", "", "", "", "", "", ""],
+// ["white", "elephant a possession that costs more to keep than its worth", "snowy", "lily-white", "white-hot", "blank", "clean", "whitened", "ashen", "blanched", "bloodless", "livid", "white person", "Caucasian", "White", "whiteness", "Edward White", "Edward D. White", "Edward Douglas White Jr.", "Patrick White", "Patrick Victor Martindale White", "T. H. White", "Theodore Harold White", "Stanford White", "E. B. White", "Elwyn Brooks White", "Andrew D. White", "Andrew Dickson White", "White River", "egg white", "albumen", "ovalbumin", "flannel", "gabardine", "tweed", "achromatic color", "achromatic colour", "architect", "author", "chief justice", "designer", "educator", "fixings", "individual", "ingredient", "journalist", "man", "mortal", "pant", "pedagog", "pedagogue", "person", "piece", "river", "somebody", "someone", "soul", "trouser", "writer", "whiten", "color", "colour", "discolor", "discolour"],
+["zealous", "enthusiastic; fervent; fanatica", "avid", "eager"]]
 
 
+var wordCount = 0;
+var classIdentifier = '';
+
+function parse() {
+	// var classIdentifier = '';
+
+	if (document.URL.search("twitter.com") != -1) {
+		classIdentifier = 'js-tweet-text tweet-text';
+	} else if (document.URL.search("facebook.com") != -1) {
+		classIdentifier = '_5pbx userContent';
+	}
+
+	var posts = document.getElementsByClassName(classIdentifier);
+	for (i = 0; i < posts.length; i++) {
+		var currentPost = posts[i];
+		var currentPostObject;
+		if (document.URL.search("twitter.com") != -1) {
+			currentPostObject = currentPost;
+		} else {
+		 	currentPostObject = currentPost.getElementsByTagName('p')[0];
+		}
+		var textWithTags = currentPostObject.innerHTML;
+		var plainText = currentPostObject.innerText;
+
+		var plainTextArray = plainText.split(" ");
+
+
+		// NOTE: the replacing the word is CASE-SENSITIVE
+		var oldWord = " the "; // issue: for words like 'and' it replaces itself in longer words such as 'anderson'  
+		var newWord = "!!!!chortle!!!!"; // possible fix ^^^ add spaces: ' and ' 
+		var definition = "a slight chuckle";
+
+		// alert("parse is running");
+
+		// synonym magic goes here
+		for (j = 0; j < plainTextArray.length; j++) {
+			if (plainTextArray[j].length > 3) {
+				for (k = 0; k < smartWords.length; k++) {
+					if (smartWords[k].length > 2) {
+						for (l = 2; l < smartWords[k].length; l++) {
+							// console.log("comparing " + smartWords[k][l] + " to " + plainTextArray[j]);
+							if (smartWords[k][l] == plainTextArray[j]) {
+								console.log(plainText);
+								oldWord = plainTextArray[j];
+								newWord = smartWords[k][0];
+								definition = smartWords[k][1];
+								// j += 10;
+
+								console.log("replacing " + oldWord + " with " + newWord);
+
+								currentPostObject.setAttribute("title", definition);
+
+								var newText = textWithTags.replace(oldWord, newWord);
+								currentPostObject.innerHTML = newText;
+								wordCount++;
+							}
+						}
+					} 
+				}
+			}
+		}
+
+		// var insertion = "<span 
+		// data-tipped-options=\"title: '" + newWord + "', position: 'top'\"
+		// title=\"" + definition + "\"  
+		// id=\"translated" + wordCount + "\">" + 
+		// newWord + 
+		// "</span>";
+
+		// var insertion = 
+		// "<span 
+		// title=\"" + definition + "\" 
+		// id=\"translated" + wordCount + "\" 
+		// data-tipped-options=\"title: '" + newWord + "', position: 'top'\">" + newWord + "</span>";
+		
+		//"<span title=\"" + "word" + "\" id=\"translated" + "1" + "\" data-tipped-options=\"title: '" + newWord + "', position: 'top'\">hella</span>"
+		//"<span title=\"" + definition + "\" id=\"translated" + wordCount + "\" data-tipped-options=\"title: '" + newWord + "', position: 'top'\">hella</span>"
+
+
+
+		// Tipped.create('#word\'' + wordCount, { title: true, title: newWord });
+
+
+	}
+
+
+	// alert("done!");
+
+} 
+
+window.onload = parse();
+// $(window).scroll(function() {
+// 	parse();
+// 	// Tipped.create(txt, 'Some tooltip text');
+// })
+
+function setup() {
+
+
+}
+
+ $(window).scroll(function() {   
+   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+   	parse();
+	Tipped.create('.userContent'
+		// , 'Some tooltip text');
+   }
+});
 
 // --- TEST ZONE --- //
 // js-tweet-text tweet-text
